@@ -1,0 +1,207 @@
+def find_best_days(prices):
+    min_price = float('inf')
+    max_profit = 0
+    buy_day = 0
+    sell_day = 0
+    
+    for i in range(len(prices)):
+        if prices[i] < min_price:
+            min_price = prices[i]
+            buy_day = i
+        
+        profit = prices[i] - min_price
+        if profit > max_profit:
+            max_profit = profit
+            sell_day = i
+    
+    return (buy_day+1, sell_day+1)
+prices = [100, 180, 260, 310, 40, 535, 695]
+print(f"Prices on Each Date:")
+for i in range(0,len(prices)):
+    print("Price of Day",i+1,"is",prices[i])
+best_days = find_best_days(prices)
+print(f"Buy on day {best_days[0]} and sell on day {best_days[1]}")
+
+
+OUTPUT:
+Prices on Each Date:
+
+Price of Day 1 is 100
+
+Price of Day 2 is 180
+
+Price of Day 3 is 260
+
+Price of Day 4 is 310
+
+Price of Day 5 is 40
+
+Price of Day 6 is 535
+
+Price of Day 7 is 695
+
+Buy on day 5 and sell on day 7
+
+
+
+
+def find_trilogy_year(books):
+    years = sorted(set(books.values()))
+    
+    for i in range(len(years)-2):
+        if (years[i+2] - years[i+1] == years[i+1] - years[i]) and \
+        any(years[i+1] == year for book, year in books.items() if years[i] <= year <= years[i+2]):
+            return years[i]
+    
+    return None
+
+books = {'The Hunger Games': 2008, 'Catching Fire': 2009, 'Mockingjay': 2010, 'The Lord of the Rings': 1954, \
+                 'The Return of the King': 1956, 'Divergent': 2011, 'Insurgent':2012,'Allegiant':2013,  'The Two Towers':1955}
+trilogy_year = find_trilogy_year(books)
+print(f"The earliest year in which a trilogy was published is {trilogy_year}")
+
+
+
+OUTPUT:
+
+The earliest year in which a trilogy was published is 1954
+
+
+
+
+import csv
+
+# Open the CSV file and read in the data
+with open('3_csv.csv') as file:
+    reader = csv.reader(file)
+    # Skip the header row
+    next(reader)
+    # Create an empty dictionary to store the prices for each stock
+    prices = {}
+    # Loop through each row of the CSV file
+    for row in reader:
+        # Extract the symbol, date, and price from the row
+        ticker, date, price = row
+        # Convert the price from a string to a float
+        price = float(price)
+        # Check if the ticker symbol is already in the dictionary
+        if ticker in prices:
+            # If the ticker symbol is already in the dictionary, add the price to the list of prices for that stock
+            prices[ticker].append(price)
+        else:
+            # If the ticker symbol is not already in the dictionary, create a new list with the first price
+            prices[ticker] = [price]
+
+# Loop through the dictionary of prices for each stock
+for ticker, price_list in prices.items():
+    # Calculate the highest and lowest prices for the stock
+    highest_price = max(price_list)
+    lowest_price = min(price_list)
+    # Print the results
+    print(f"{ticker}: Highest Price = ${highest_price:.2f}, Lowest Price = ${lowest_price:.2f}")
+
+
+
+
+
+
+OUTPUT
+
+
+AAPL: Highest Price = $142.20, Lowest Price = $135.90
+
+GOOG: Highest Price = $2125.50, Lowest Price = $2098.00
+
+MSFT: Highest Price = $345.20, Lowest Price = $342.10
+
+
+
+
+
+# Define the list of lists with duplicates
+list_of_lists =  [[10, 20], [40], [30, 56, 25], [10, 20], [33], [40]]
+
+# Create an empty set to store the unique lists
+unique_lists = set()
+
+# Loop through each list in the original list of lists
+for lst in list_of_lists:
+    # Convert the list to a tuple (because lists are not hashable, but tuples are)
+    lst_tuple = tuple(lst)
+    # Add the tuple to the set of unique tuples
+    unique_lists.add(lst_tuple)
+
+# Convert the set of unique tuples back to a list of lists
+unique_list_of_lists = [list(lst_tuple) for lst_tuple in unique_lists]
+
+# Print the original list of lists and the unique list of lists
+print("Original List of Lists:")
+print(list_of_lists)
+print("Unique List of Lists:")
+print(unique_list_of_lists)
+
+
+
+OUTPUT:
+
+
+
+Original List of Lists:
+
+[[10, 20], [40], [30, 56, 25], [10, 20], [33], [40]]
+
+Unique List of Lists:
+
+[[30, 56, 25], [40], [10, 20], [33]]
+
+
+
+
+
+def shift_left(lst):
+    # Check if the list is empty or has only one element
+    if len(lst) <= 1:
+        return lst
+    # Shift the elements of the list to the left by one position
+    shifted_lst = lst[1:] + [lst[0]]
+    # Return the shifted list
+    return shifted_lst
+list1 = [1,2,3]
+print(shift_left(list1))
+
+
+
+OUTPUT:
+
+
+
+[2, 3, 1]
+
+
+
+
+
+
+def count_occurrences(lst):
+    # Create an empty dictionary to store the count of each element
+    count_dict = {}
+    # Loop through each element in the list
+    for elem in lst:
+        # If the element is already in the dictionary, increment its count
+        if elem in count_dict:
+            count_dict[elem] += 1
+        # Otherwise, add the element to the dictionary with a count of 1
+        else:
+            count_dict[elem] = 1
+    # Return the dictionary of element counts
+    return count_dict
+list1 =[11, 45, 8, 11, 23, 45, 23, 45, 89, 11, 89] 
+print(count_occurrences(list1))
+
+
+
+
+OUTPUT:
+
+
+{11: 3, 45: 3, 8: 1, 23: 2, 89: 2}
